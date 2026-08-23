@@ -1,0 +1,135 @@
+{
+  "users": [
+    {
+      "id": "u_q0f56x41",
+      "name": "sarthak",
+      "email": "spandit_be24@thapar.edu",
+      "passwordHash": "$2a$10$PEFTzjMJpOVq5prNLCx4NO06pJQVZIBG7ARTqZfipG8HYOosM6p9K",
+      "role": "faculty",
+      "createdAt": "2026-08-23T09:40:22.425Z"
+    },
+    {
+      "id": "u_oq4uoa2a",
+      "name": "zanax",
+      "email": "sarthakpandit3012@gmail.com",
+      "passwordHash": "$2a$10$8H3alnUvXiZjMa4Fba3bs.fltfEtAM2fxnqAS4fkaHT96PcJqH3Pe",
+      "role": "student",
+      "createdAt": "2026-08-23T09:43:32.168Z"
+    }
+  ],
+  "questions": [
+    {
+      "id": "q_2mjlp83z",
+      "title": "do sum",
+      "description": "just sum an array bro",
+      "testCases": [
+        {
+          "input": "[1,2,3]",
+          "output": "6",
+          "hidden": true
+        },
+        {
+          "input": "[2,4,5]",
+          "output": "11",
+          "hidden": false
+        }
+      ],
+      "createdBy": "u_q0f56x41",
+      "createdAt": "2026-08-23T09:48:32.300Z"
+    }
+  ],
+  "submissions": [
+    {
+      "id": "s_46re6trn",
+      "questionId": "q_n89wanvm",
+      "studentId": "u_oq4uoa2a",
+      "studentName": "zanax",
+      "code": "function solve(input) {\n  let sum = 0;\n  for (let i = 0; i < input.length; i++) {\n    sum += input[i];\n  }\n  return sum;\n}",
+      "passed": 2,
+      "total": 2,
+      "accepted": true,
+      "results": [
+        {
+          "hidden": true,
+          "ok": true,
+          "error": null
+        },
+        {
+          "hidden": false,
+          "ok": true,
+          "error": null
+        }
+      ],
+      "submittedAt": "2026-08-23T09:44:19.816Z"
+    },
+    {
+      "id": "s_pwmnoj24",
+      "questionId": "q_2mjlp83z",
+      "studentId": "u_oq4uoa2a",
+      "studentName": "zanax",
+      "code": "function solve(input) {\n  return sum;\n}",
+      "passed": 0,
+      "total": 2,
+      "accepted": false,
+      "results": [
+        {
+          "hidden": true,
+          "ok": false,
+          "error": "sum is not defined"
+        },
+        {
+          "hidden": false,
+          "ok": false,
+          "error": "sum is not defined"
+        }
+      ],
+      "submittedAt": "2026-08-23T09:50:01.524Z"
+    },
+    {
+      "id": "s_e5ket59j",
+      "questionId": "q_2mjlp83z",
+      "studentId": "u_oq4uoa2a",
+      "studentName": "zanax",
+      "code": "function solve(input) {\n  return sum;\n}",
+      "passed": 0,
+      "total": 2,
+      "accepted": false,
+      "results": [
+        {
+          "hidden": true,
+          "ok": false,
+          "error": "sum is not defined"
+        },
+        {
+          "hidden": false,
+          "ok": false,
+          "error": "sum is not defined"
+        }
+      ],
+      "submittedAt": "2026-08-23T09:50:01.742Z"
+    },
+    {
+      "id": "s_cb7kpf2d",
+      "questionId": "q_2mjlp83z",
+      "studentId": "u_oq4uoa2a",
+      "studentName": "zanax",
+      "code": "function solve(input){ return 11;}\n",
+      "passed": 1,
+      "total": 2,
+      "accepted": false,
+      "results": [
+        {
+          "hidden": true,
+          "ok": false,
+          "error": null
+        },
+        {
+          "hidden": false,
+          "ok": true,
+          "error": null
+        }
+      ],
+      "submittedAt": "2026-08-23T10:33:51.730Z"
+    }
+  ]
+}

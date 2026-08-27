@@ -1,0 +1,25 @@
+{
+  "name": "clear",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Kavisharora12/CodeArena#readme",
+  "bugs": {
+    "url": "https://github.com/Kavisharora12/CodeArena/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kavisharora12/CodeArena.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "dependencies": {
+    "express": "^5.2.1",
+    "node": "^26.7.0"
+  }
+}

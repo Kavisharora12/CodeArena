@@ -2,9 +2,11 @@
 
 import React from "react";
 
-type SignupProps = {};
+type SignupProps = {
+  onLogin: () => void;
+};
 
-const Signup: React.FC<SignupProps> = () => {
+const Signup: React.FC<SignupProps> = ({ onLogin }) => {
   return (
     <form className="space-y-6 px-6 pb-4">
       <h3 className="text-xl font-medium text-white">
@@ -73,6 +75,7 @@ const Signup: React.FC<SignupProps> = () => {
         Already have an account?{" "}
         <button
           type="button"
+          onClick={onLogin}
           className="text-brand-orange hover:underline"
         >
           Log In

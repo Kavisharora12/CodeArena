@@ -2,9 +2,11 @@
 
 import React from "react";
 
-type LoginProps = {};
+type LoginProps = {
+  onRegister: () => void;
+};
 
-const Login: React.FC<LoginProps> = () => {
+const Login: React.FC<LoginProps> = ({ onRegister }) => {
   return (
     <form className="space-y-6 px-6 pb-4">
       <h3 className="text-xl font-medium text-white">
@@ -56,6 +58,7 @@ const Login: React.FC<LoginProps> = () => {
         Not Registered?{" "}
         <button
           type="button"
+          onClick={onRegister}
           className="text-brand-orange hover:underline"
         >
           Create account

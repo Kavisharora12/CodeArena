@@ -2,16 +2,15 @@
 
 import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
+
 import Login from "./Login";
 import Signup from "./Signup";
 import ResetPassword from "./ResetPassword";
 
-type AuthModalProps = {};
-
-const AuthModal: React.FC<AuthModalProps> = () => {
-  const [type, setType] = useState<"login" | "register" | "forgotPassword">(
-    "login"
-  );
+const AuthModal: React.FC = () => {
+  const [type, setType] = useState<
+    "login" | "register" | "forgotPassword"
+  >("login");
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -35,7 +34,7 @@ const AuthModal: React.FC<AuthModalProps> = () => {
       <div className="w-full sm:w-[450px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex justify-center items-center">
         <div className="relative w-full h-full mx-auto flex items-center justify-center">
           <div className="bg-white rounded-lg shadow relative w-full bg-gradient-to-b from-brand-orange to-slate-900 mx-6">
-
+            
             {/* Close Button */}
             <div className="flex justify-end p-2">
               <button
@@ -48,14 +47,17 @@ const AuthModal: React.FC<AuthModalProps> = () => {
             </div>
 
             {/* Login */}
-            {type === "login" && <Login />}
+            {type === "login" && (
+              <Login onRegister={() => setType("register")} />
+            )}
 
             {/* Signup */}
-            {type === "register" && <Signup />}
+            {type === "register" && (
+              <Signup onLogin={() => setType("login")} />
+            )}
 
             {/* Reset Password */}
             {type === "forgotPassword" && <ResetPassword />}
-
           </div>
         </div>
       </div>

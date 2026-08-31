@@ -5,11 +5,11 @@ import Providers from "./Providers";
 
 export const metadata: Metadata = {
   title: "CodeArena",
-  icons: {
-    icon: "/favicon.ico",
-  },
   description:
     "Web application that contains CodeArena problems and video solutions",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 export default function RootLayout({

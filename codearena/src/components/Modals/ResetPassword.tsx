@@ -1,15 +1,17 @@
 "use client";
 
+import { on } from "events";
 import React, { useState } from "react";
 
-type ResetPasswordProps = {};
-
-const ResetPassword: React.FC<ResetPasswordProps> = () => {
+type ResetPasswordProps = {
+  onLogin: () => void;
+};
+const ResetPassword: React.FC<ResetPasswordProps> = ({ onLogin }) => {
   const [email, setEmail] = useState("");
 
   const handleReset = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
     console.log(email);
+    onLogin();
   };
 
   return (
@@ -50,6 +52,16 @@ const ResetPassword: React.FC<ResetPasswordProps> = () => {
       >
         Reset Password
       </button>
+      <div className="text-sm font-medium text-gray-300">
+        Remember your password?{" "}
+        <button
+          type="button"
+          onClick={onLogin}
+          className="text-brand-orange hover:underline"
+        >
+          Log In
+        </button>
+      </div>
     </form>
   );
 };

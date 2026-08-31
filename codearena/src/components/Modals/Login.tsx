@@ -4,9 +4,12 @@ import React from "react";
 
 type LoginProps = {
   onRegister: () => void;
+  onForgotPassword: () => void;
 };
-
-const Login: React.FC<LoginProps> = ({ onRegister }) => {
+const Login: React.FC<LoginProps> = ({
+  onRegister,
+  onForgotPassword,
+}) => {
   return (
     <form className="space-y-6 px-6 pb-4">
       <h3 className="text-xl font-medium text-white">
@@ -53,6 +56,14 @@ const Login: React.FC<LoginProps> = ({ onRegister }) => {
       >
         Log In
       </button>
+
+     <button
+        type="button"
+        onClick={onForgotPassword}
+        className="flex w-full justify-end text-sm text-brand-orange hover:underline"
+        >
+        Forgot Password?
+        </button>
 
       <div className="text-sm font-medium text-gray-300">
         Not Registered?{" "}

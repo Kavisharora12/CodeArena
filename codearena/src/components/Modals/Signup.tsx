@@ -7,8 +7,19 @@ type SignupProps = {
 };
 
 const Signup: React.FC<SignupProps> = ({ onLogin }) => {
+  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Registration logic will go here later
+
+    onLogin();
+  };
+
   return (
-    <form className="space-y-6 px-6 pb-4">
+    <form
+      className="space-y-6 px-6 pb-4"
+      onSubmit={handleRegister}
+    >
       <h3 className="text-xl font-medium text-white">
         Register to CodeArena
       </h3>
@@ -43,7 +54,7 @@ const Signup: React.FC<SignupProps> = ({ onLogin }) => {
           name="displayName"
           id="displayName"
           className="border-2 outline-none sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white"
-          placeholder="John Doe"
+          placeholder="Aayushi"
         />
       </div>
 

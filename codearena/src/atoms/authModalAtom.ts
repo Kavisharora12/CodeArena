@@ -8,7 +8,7 @@ type AuthModalState = {
 export const authModalState = atom<AuthModalState>({
   key: "authModalState",
   default: {
-    isOpen: true,
+    isOpen: false,
     type: "login",
   },
 });

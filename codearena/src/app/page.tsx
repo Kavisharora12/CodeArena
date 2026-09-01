@@ -2,6 +2,7 @@
 
 import ProblemsTable from "@/components/ProblemsTable/ProblemsTable";
 import Topbar from "@/components/Topbar/Topbar";
+import AuthModal from "@/components/Modals/AuthModal";
 import useHasMounted from "@/hooks/useHasMounted";
 
 import { useState } from "react";
@@ -16,6 +17,8 @@ export default function Home() {
 		<>
 			<main className="bg-dark-layer-2 min-h-screen">
 				<Topbar />
+
+				<AuthModal />
 
 				<h1
 					className="text-2xl text-center text-gray-700 dark:text-gray-400 font-medium

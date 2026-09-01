@@ -1,18 +1,88 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import { authModalState } from "@/atoms/authModalAtom";
+import { auth, firestore } from "@/firebase/firebase";
+import { useSetRecoilState } from "recoil";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useRouter } from "next/navigation";
+import { doc, setDoc } from "firebase/firestore";
 
-type SignupProps = {
-  onLogin: () => void;
-};
+const Signup: React.FC = () => {
+  const setAuthModalState = useSetRecoilState(authModalState);
 
-const Signup: React.FC<SignupProps> = ({ onLogin }) => {
-  const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
+  const [inputs, setInputs] = useState({
+    email: "",
+    displayName: "",
+    password: "",
+  });
+
+  const router = useRouter();
+
+  const [
+    createUserWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useCreateUserWithEmailAndPassword(auth);
+
+  const handleClick = () => {
+    setAuthModalState((prev) => ({
+      ...prev,
+      type: "login",
+    }));
+  };
+
+  const handleChangeInput = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setInputs((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleRegister = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
 
-    // Registration logic will go here later
+    console.log(inputs);
 
-    onLogin();
+    if (!inputs.email || !inputs.password || !inputs.displayName) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    try {
+      const newUser = await createUserWithEmailAndPassword(
+        inputs.email,
+        inputs.password
+      );
+
+      if (!newUser) return;
+
+      const userData = {
+        uid: newUser.user.uid,
+        email: newUser.user.email,
+        displayName: inputs.displayName,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        likedProblems: [],
+        dislikedProblems: [],
+        solvedProblems: [],
+        starredProblems: [],
+      };
+
+      await setDoc(
+        doc(firestore, "users", newUser.user.uid),
+        userData
+      );
+
+      router.push("/");
+    } catch (error: any) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -33,6 +103,7 @@ const Signup: React.FC<SignupProps> = ({ onLogin }) => {
         </label>
 
         <input
+          onChange={handleChangeInput}
           type="email"
           name="email"
           id="email"
@@ -50,6 +121,7 @@ const Signup: React.FC<SignupProps> = ({ onLogin }) => {
         </label>
 
         <input
+          onChange={handleChangeInput}
           type="text"
           name="displayName"
           id="displayName"
@@ -67,6 +139,7 @@ const Signup: React.FC<SignupProps> = ({ onLogin }) => {
         </label>
 
         <input
+          onChange={handleChangeInput}
           type="password"
           name="password"
           id="password"
@@ -75,18 +148,25 @@ const Signup: React.FC<SignupProps> = ({ onLogin }) => {
         />
       </div>
 
+      {error && (
+        <p className="text-sm text-red-500">
+          {error.message}
+        </p>
+      )}
+
       <button
         type="submit"
-        className="w-full text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-brand-orange hover:bg-brand-orange-s"
+        disabled={loading}
+        className="w-full text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-brand-orange hover:bg-brand-orange-s disabled:opacity-50"
       >
-        Register
+        {loading ? "Registering..." : "Register"}
       </button>
 
       <div className="text-sm font-medium text-gray-300">
         Already have an account?{" "}
         <button
           type="button"
-          onClick={onLogin}
+          onClick={handleClick}
           className="text-brand-orange hover:underline"
         >
           Log In

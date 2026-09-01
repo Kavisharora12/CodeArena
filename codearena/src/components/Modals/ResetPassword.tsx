@@ -1,17 +1,28 @@
 "use client";
 
-import { on } from "events";
 import React, { useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { authModalState } from "@/atoms/authModalAtom";
 
-type ResetPasswordProps = {
-  onLogin: () => void;
-};
-const ResetPassword: React.FC<ResetPasswordProps> = ({ onLogin }) => {
+const ResetPassword: React.FC = () => {
   const [email, setEmail] = useState("");
 
+  const setAuthModalState = useSetRecoilState(authModalState);
+
+  const handleLogin = () => {
+    setAuthModalState((prev) => ({
+      ...prev,
+      type: "login",
+    }));
+  };
+
   const handleReset = (e: React.FormEvent<HTMLFormElement>) => {
+   
+
     console.log(email);
-    onLogin();
+    handleLogin();
+
+    // Firebase password reset logic will go here
   };
 
   return (
@@ -52,11 +63,12 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onLogin }) => {
       >
         Reset Password
       </button>
+
       <div className="text-sm font-medium text-gray-300">
         Remember your password?{" "}
         <button
           type="button"
-          onClick={onLogin}
+          onClick={handleLogin}
           className="text-brand-orange hover:underline"
         >
           Log In

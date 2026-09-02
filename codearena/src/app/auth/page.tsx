@@ -1,18 +1,13 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { useRecoilState } from "recoil";
 import { authModalState } from "@/atoms/authModalAtom";
 import AuthModal from "@/components/Modals/AuthModal";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/firebase/firebase";
-import { useRouter } from "next/navigation";
 
 const AuthPage = () => {
-  const [authModal, setAuthModalState] = useRecoilState(authModalState);
-
-  const [user, loading] = useAuthState(auth);
-  const router = useRouter();
+  const [authModal, setAuthModalState] =
+    useRecoilState(authModalState);
 
   const handleSignIn = () => {
     setAuthModalState((prev) => ({
@@ -21,17 +16,6 @@ const AuthPage = () => {
       type: "login",
     }));
   };
-
-  useEffect(() => {
-    if (user) {
-      router.push("/auth");
-    }
-  }, [user, router]);
-
-  // Wait for Firebase to check authentication
-  if (loading) {
-    return null;
-  }
 
   return (
     <div className="bg-gradient-to-b from-gray-600 to-black min-h-screen relative">
@@ -45,18 +29,16 @@ const AuthPage = () => {
         />
       </div>
 
-      {/* Hero - stays visible */}
-      {!authModal.isOpen && (
-        <div className="flex items-center justify-center mt-20">
-          <img
-            src="/hero.png"
-            alt="CodeArena"
-            className="max-w-full h-auto"
-          />
-        </div>
-      )}
+      {/* Hero */}
+      <div className="flex items-center justify-center mt-20">
+        <img
+          src="/hero.png"
+          alt="CodeArena"
+          className="max-w-full h-auto"
+        />
+      </div>
 
-      {/* Sign In Button */}
+      {/* Sign In */}
       {!authModal.isOpen && (
         <div className="flex justify-center mt-8">
           <button
@@ -69,7 +51,7 @@ const AuthPage = () => {
         </div>
       )}
 
-      {/* Auth Modal */}
+      {/* Modal */}
       <AuthModal />
 
     </div>

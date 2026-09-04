@@ -1,12 +1,25 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { auth } from "@/firebase/firebase";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useSetRecoilState } from "recoil";
 import { authModalState } from "@/atoms/authModalAtom";
+import { toast } from "react-toastify";
 
 const Signup: React.FC = () => {
 	const setAuthModalState = useSetRecoilState(authModalState);
+
 	const [displayName, setDisplayName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+
+	const [
+		createUserWithEmailAndPassword,
+		user,
+		loading,
+		error,
+	] = useCreateUserWithEmailAndPassword(auth);
 
 	const handleLogin = () => {
 		setAuthModalState((prev) => ({
@@ -14,11 +27,67 @@ const Signup: React.FC = () => {
 			type: "login",
 		}));
 	};
-const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
-	e.preventDefault();
 
-	handleLogin();
-};
+	const handleRegister = async (
+		e: React.FormEvent<HTMLFormElement>
+	) => {
+		e.preventDefault();
+
+		if (!email || !password || !displayName) {
+			toast.error("Please fill all fields", {
+				position: "top-center",
+				autoClose: 3000,
+				theme: "dark",
+			});
+			return;
+		}
+
+		if (password.length < 6) {
+			toast.error("Password must be at least 6 characters", {
+				position: "top-center",
+				autoClose: 3000,
+				theme: "dark",
+			});
+			return;
+		}
+
+		await createUserWithEmailAndPassword(email, password);
+	};
+
+	useEffect(() => {
+		if (user) {
+			localStorage.setItem(
+				"codearenaDisplayName",
+				displayName
+			);
+
+			localStorage.setItem("codearenaEmail", email);
+			localStorage.setItem("codearenaLoggedIn", "true");
+
+			toast.success("Account created successfully!", {
+				position: "top-center",
+				autoClose: 3000,
+				theme: "dark",
+			});
+
+			setAuthModalState((prev) => ({
+				...prev,
+				isLoggedIn: true,
+				isOpen: false,
+				type: "login",
+			}));
+		}
+	}, [user, displayName, email, setAuthModalState]);
+
+	useEffect(() => {
+		if (error) {
+			toast.error(error.message, {
+				position: "top-center",
+				autoClose: 4000,
+				theme: "dark",
+			});
+		}
+	}, [error]);
 
 	return (
 		<form
@@ -41,6 +110,8 @@ const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
 					type="email"
 					name="email"
 					id="email"
+					value={email}
+					onChange={(e) => setEmail(e.target.value)}
 					className="border-2 outline-none sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white"
 					placeholder="name@company.com"
 				/>
@@ -77,6 +148,8 @@ const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
 					type="password"
 					name="password"
 					id="password"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
 					className="border-2 outline-none sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white"
 					placeholder="*******"
 				/>
@@ -84,9 +157,10 @@ const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
 
 			<button
 				type="submit"
-				className="w-full text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-brand-orange hover:bg-brand-orange-s"
+				disabled={loading}
+				className="w-full text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-brand-orange hover:bg-brand-orange-s disabled:opacity-50"
 			>
-				Register
+				{loading ? "Creating Account..." : "Register"}
 			</button>
 
 			<div className="text-sm font-medium text-gray-300">

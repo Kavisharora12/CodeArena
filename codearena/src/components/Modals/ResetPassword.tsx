@@ -1,45 +1,64 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { auth } from "@/firebase/firebase";
 import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
-import { useSetRecoilState } from "recoil";
-import { authModalState } from "@/atoms/authModalAtom";
+import { toast } from "react-toastify";
 
-const ResetPassword: React.FC = () => {
+type ResetPasswordProps = {};
+
+const ResetPassword: React.FC<ResetPasswordProps> = () => {
 	const [email, setEmail] = useState("");
 
 	const [sendPasswordResetEmail, sending, error] =
 		useSendPasswordResetEmail(auth);
-
-	const setAuthModalState = useSetRecoilState(authModalState);
-
-	const handleLogin = () => {
-		setAuthModalState((prev) => ({
-			...prev,
-			isOpen: true,
-			type: "login",
-		}));
-	};
 
 	const handleReset = async (
 		e: React.FormEvent<HTMLFormElement>
 	) => {
 		e.preventDefault();
 
-		if (!email) return;
+		if (!email) {
+			toast.error("Please enter your email", {
+				position: "top-center",
+				autoClose: 3000,
+				theme: "dark",
+			});
+			return;
+		}
 
 		const success = await sendPasswordResetEmail(email);
 
 		if (success) {
-			alert("Password reset email sent!");
-			handleLogin();
+			toast.success("Password reset email sent", {
+				position: "top-center",
+				autoClose: 3000,
+				theme: "dark",
+			});
+
+			setEmail("");
+		} else {
+			toast.error("Password reset email could not be sent", {
+				position: "top-center",
+				autoClose: 3000,
+				theme: "dark",
+			});
 		}
 	};
 
+	useEffect(() => {
+		if (error) {
+			toast.error(error.message, {
+				position: "top-center",
+				autoClose: 4000,
+				theme: "dark",
+			});
+		}
+	}, [error]);
+
 	return (
 		<form
-			className="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6"
+			className="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
 			onSubmit={handleReset}
 		>
 			<h3 className="text-xl font-medium text-white">
@@ -48,7 +67,7 @@ const ResetPassword: React.FC = () => {
 
 			<p className="text-sm text-white">
 				Forgotten your password? Enter your e-mail address below,
-				and we'll send you an e-mail allowing you to reset it.
+				and we&apos;ll send you an e-mail allowing you to reset it.
 			</p>
 
 			<div>
@@ -70,30 +89,13 @@ const ResetPassword: React.FC = () => {
 				/>
 			</div>
 
-			{error && (
-				<p className="text-red-400 text-sm">
-					{error.message}
-				</p>
-			)}
-
 			<button
 				type="submit"
 				disabled={sending}
-				className="w-full text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-brand-orange hover:bg-brand-orange-s disabled:opacity-50"
+				className="w-full text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-brand-orange hover:bg-brand-orange-s disabled:opacity-50"
 			>
 				{sending ? "Sending..." : "Reset Password"}
 			</button>
-
-			<div className="text-sm font-medium text-gray-300">
-				Remember your password?{" "}
-				<button
-					type="button"
-					onClick={handleLogin}
-					className="text-brand-orange hover:underline"
-				>
-					Log In
-				</button>
-			</div>
 		</form>
 	);
 };

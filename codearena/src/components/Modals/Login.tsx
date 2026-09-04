@@ -17,23 +17,23 @@ const Login: React.FC = () => {
 			type,
 		}));
 	};
-const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+	const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
+		const formData = new FormData(e.currentTarget);
+		const email = formData.get("email") as string;
 
-    localStorage.setItem("codearenaEmail", email);
-    localStorage.setItem("codearenaLoggedIn", "true");
+		localStorage.setItem("codearenaEmail", email);
+		localStorage.setItem("codearenaLoggedIn", "true");
 
-    setAuthModalState((prev) => ({
-        ...prev,
-        isLoggedIn: true,
-        isOpen: false,
-    }));
+		setAuthModalState((prev) => ({
+			...prev,
+			isLoggedIn: true,
+			isOpen: false,
+		}));
 
-    router.push("/");
-};
+		router.push("/");
+	};
 
 	return (
 		<form

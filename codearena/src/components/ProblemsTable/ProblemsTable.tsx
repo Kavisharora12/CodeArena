@@ -17,18 +17,29 @@ export default function ProblemsTable({
 					key={problem.id}
 					className="hover:bg-gray-800 transition-colors"
 				>
-					{/* Problem */}
-					<td className="px-6 py-4">
+					{/* STATUS */}
+					<td className="px-1 py-4 w-[60px]">
+						<div className="flex items-center justify-center">
+							<div className="w-4 h-4 rounded-full border border-green-500 flex items-center justify-center">
+								<span className="text-green-500 text-xs">
+									✓
+								</span>
+							</div>
+						</div>
+					</td>
+
+					{/* TITLE */}
+					<td className="px-6 py-4 w-[300px]">
 						<Link
 							href={`/problems/${problem.id}`}
-							className="text-white hover:text-brand-orange"
+							className="text-gray-300 hover:text-white"
 						>
-							{problem.title}
+							{problem.order}. {problem.title}
 						</Link>
 					</td>
 
-					{/* Difficulty */}
-					<td className="px-6 py-4">
+					{/* DIFFICULTY */}
+					<td className="px-6 py-4 w-[150px]">
 						<span
 							className={
 								problem.difficulty === "Easy"
@@ -42,25 +53,20 @@ export default function ProblemsTable({
 						</span>
 					</td>
 
-					{/* Category */}
-					<td className="px-6 py-4 text-gray-300">
+					{/* CATEGORY */}
+					<td className="px-6 py-4 w-[200px] text-gray-300">
 						{problem.category}
 					</td>
 
-					{/* Order */}
-					<td className="px-6 py-4 text-gray-300">
-						{problem.order}
-					</td>
-
-					{/* Video */}
-					<td className="px-6 py-4">
+					{/* SOLUTION */}
+					<td className="px-6 py-4 w-[150px]">
 						{problem.videoId ? (
-							<span className="text-green-400">
-								Available
+							<span className="text-white">
+								▶
 							</span>
 						) : (
 							<span className="text-gray-500">
-								coming soon
+								Coming soon
 							</span>
 						)}
 					</td>

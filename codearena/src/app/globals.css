@@ -24,3 +24,28 @@
   --color-dark-green-s: rgb(44, 187, 93);
   --color-dark-blue-s: rgb(10, 132, 255);
 }
+.split {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	height: calc(100vh - 50px);
+}
+
+.split > * {
+	min-width: 0;
+}
+
+.gutter {
+	background-color: #374151;
+	background-repeat: no-repeat;
+	background-position: 50%;
+}
+
+.gutter.gutter-horizontal {
+	cursor: col-resize;
+	width: 8px;
+}
+
+.gutter:hover {
+	background-color: #4b5563;
+}

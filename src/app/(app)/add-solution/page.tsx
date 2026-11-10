@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area';
 import MDEditor from '@uiw/react-md-editor';
 import { Loader2, Send } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 
 import {
   Form,
@@ -25,7 +25,7 @@ import { ISubmission } from '@/models/Submission';
 import { toast } from 'sonner';
 import Link from 'next/link';
 
-export default function AddSolutionPage() {
+function AddSolutionContent() {
 
   const [mounted, setMounted] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -206,4 +206,12 @@ export default function AddSolutionPage() {
       </div>
     </div>
   )
+}
+
+export default function AddSolutionPage() {
+  return (
+    <Suspense fallback={null}>
+      <AddSolutionContent />
+    </Suspense>
+  );
 }

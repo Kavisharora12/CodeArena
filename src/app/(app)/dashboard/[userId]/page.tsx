@@ -20,7 +20,7 @@ export interface FilteredLanguageType {
     py: number
   }
 
-export default function page() {
+export default function DashboardPage() {
   const [fullUserInfo, setFullUserInfo] = useState<IUser | null>(null);
   const { userId } = useParams()
   const [levelWiseSolvedQuestions, setLevelWiseSolvedQuestions] = useState<LevelWiseProblemType>({

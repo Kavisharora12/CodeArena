@@ -28,7 +28,7 @@ import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } 
 import { firebaseAuth } from '@/lib/firebase';
 
 
-export default function page() {
+export default function SignUpPage() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [mounted, setMounted] = useState<boolean>(false);
   const [isShowingPassword, setIsShowingPassword] = useState<boolean>(false);

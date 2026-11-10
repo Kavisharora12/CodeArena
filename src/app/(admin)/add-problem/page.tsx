@@ -24,7 +24,7 @@ import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
 
-export default function page() {
+export default function AddProblemPage() {
 
   const [mounted, setMounted] = useState(false);
   const { theme, systemTheme, setTheme } = useTheme();

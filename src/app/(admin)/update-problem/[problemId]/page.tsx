@@ -25,7 +25,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { IProblem } from '@/models/Problem';
 
 
-export default function page() {
+export default function UpdateProblemPage() {
 
   const [mounted, setMounted] = useState(false);
   const { theme, systemTheme, setTheme } = useTheme();

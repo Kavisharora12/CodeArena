@@ -1,0 +1,15 @@
+.git
+.next
+node_modules
+coverage
+out
+build
+.env*
+!.env.example
+!.env.production.example
+firebase-service-account.json
+**/firebase-service-account.json
+journals
+project-proposal
+*.tsbuildinfo
+npm-debug.log*

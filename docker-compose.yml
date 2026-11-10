@@ -1,0 +1,30 @@
+services:
+  app:
+    build:
+      context: .
+      secrets:
+        - firebase-service-account
+      args:
+        NEXT_PUBLIC_FIREBASE_API_KEY: ${NEXT_PUBLIC_FIREBASE_API_KEY:?Set it in .env.production}
+        NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN:?Set it in .env.production}
+        NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${NEXT_PUBLIC_FIREBASE_PROJECT_ID:?Set it in .env.production}
+        NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET:?Set it in .env.production}
+        NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID:?Set it in .env.production}
+        NEXT_PUBLIC_FIREBASE_APP_ID: ${NEXT_PUBLIC_FIREBASE_APP_ID:?Set it in .env.production}
+    env_file:
+      - .env.production
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /run/secrets/firebase-service-account.json
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - ${FIREBASE_SERVICE_ACCOUNT_FILE:?Set it in .env.production}:/run/secrets/firebase-service-account.json:ro
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+secrets:
+  firebase-service-account:
+    file: ${FIREBASE_SERVICE_ACCOUNT_FILE:?Set it in .env.production}
